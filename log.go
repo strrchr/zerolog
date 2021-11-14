@@ -201,6 +201,7 @@ type Logger struct {
 	context []byte
 	hooks   []Hook
 	stack   bool
+	time    bool // add time field first
 }
 
 // New creates a root logger with given output writer. If the output writer implements
@@ -433,6 +434,9 @@ func (l *Logger) newEvent(level Level, done func(string)) *Event {
 	e := newEvent(l.w, level)
 	e.done = done
 	e.ch = l.hooks
+	if l.time {
+		e.Timestamp()
+	}
 	if level != NoLevel && LevelFieldName != "" {
 		e.Str(LevelFieldName, LevelFieldMarshalFunc(level))
 	}

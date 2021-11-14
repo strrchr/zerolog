@@ -334,7 +334,7 @@ var th = timestampHook{}
 //
 // NOTE: It won't dedupe the "time" key if the *Context has one already.
 func (c Context) Timestamp() Context {
-	c.l = c.l.Hook(th)
+	c.l.time = true
 	return c
 }
 
